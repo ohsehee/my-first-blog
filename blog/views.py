@@ -24,10 +24,9 @@ def post_new(request):
         form = PostForm()
     return render(request, 'blog/post_edit.html', {'form': form})
 
-def post_edit(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+def post_new(request):
     if request.method == "POST":
-        form = PostForm(instance=post)
+        form = PostForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
@@ -35,5 +34,5 @@ def post_edit(request, pk):
             post.save()
             return redirect('post_detail', pk=post.pk)
     else:
-        form = PostForm(instance=post)
+        form = PostForm()
     return render(request, 'blog/post_edit.html', {'form': form})
